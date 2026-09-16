@@ -2062,16 +2062,9 @@ initDatabase()
   .then(
     () => {
 
-      app.listen(
-        PORT,
-        () => {
-
-          console.log(
-            `✓ A Little Something is running at http://localhost:${PORT}`
-          );
-
-        }
-      );
+      app.listen(PORT, "0.0.0.0", () =>
+  console.log(`✓ A Little Something is running on port ${PORT}`)
+)
 
     }
   )
