@@ -1,0 +1,826 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f5eee7" />
+
+  <title>A Little Something For You ♡</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body data-mood="">
+
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- Mood-dependent floating elements -->
+  <div class="ambient" id="ambient" aria-hidden="true"></div>
+
+
+  <!-- HEADER -->
+
+  <header class="topbar">
+
+    <button
+      class="brand"
+      id="homeBtn"
+      type="button"
+      aria-label="Go to today"
+    >
+      <span class="brand-mark">♡</span>
+      <span>A Little Something</span>
+    </button>
+
+    <div class="top-actions">
+
+      <button
+        class="text-btn hidden"
+        id="daysBtn"
+        type="button"
+      >
+        my little days ↗
+      </button>
+
+      <button
+        class="pill-btn"
+        id="authBtn"
+        type="button"
+      >
+        sign in
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <main class="stage">
+
+
+    <!-- =========================
+         HOME
+         ========================= -->
+
+    <section
+      class="home-view"
+      id="homeView"
+    >
+
+      <div class="tiny-intro">
+
+        <span class="tiny-star">✦</span>
+
+        A TINY CORNER OF THE INTERNET
+
+        <span class="intro-line"></span>
+
+      </div>
+
+
+      <div class="question-block">
+
+        <p class="question-kicker">
+          TODAY, YOU FEEL...
+        </p>
+
+        <h1>
+          How are you,<br>
+          <em>really?</em>
+        </h1>
+
+
+        <button
+          class="feeling-trigger"
+          id="feelingTrigger"
+          type="button"
+        >
+
+          <span
+            class="trigger-emoji"
+            id="triggerEmoji"
+          >
+            ♡
+          </span>
+
+          <span
+            class="trigger-text"
+            id="triggerText"
+          >
+            tap to tell me
+          </span>
+
+          <span class="trigger-arrow">
+            ↗
+          </span>
+
+        </button>
+
+
+        <p
+          class="quiet-line"
+          id="quietLine"
+        >
+          no right answer · no judgement · just you
+        </p>
+
+      </div>
+
+
+      <!-- WRITING -->
+
+      <div class="writing-wrap">
+
+        <div class="writing-topline">
+
+          <div>
+
+            <span class="tiny-label">
+
+              TODAY ·
+
+              <span id="todayLabel">
+                —
+              </span>
+
+            </span>
+
+            <h2 id="writeHeading">
+              What would you like to leave here?
+            </h2>
+
+          </div>
+
+
+          <span
+            class="mood-chip"
+            id="selectedMoodBadge"
+          >
+            choose a feeling first
+          </span>
+
+        </div>
+
+
+        <div
+          class="journal-card"
+          id="journalCard"
+        >
+
+          <div class="card-tape"></div>
+
+          <div
+            class="corner-scribble"
+            id="cardSymbol"
+          >
+            ♡
+          </div>
+
+
+          <div
+            class="card-label"
+            id="writePrompt"
+          >
+            pick a feeling first, then start anywhere...
+          </div>
+
+
+          <textarea
+            id="text"
+            maxlength="5000"
+            disabled
+            placeholder="what happened, what you wish you'd said, what you miss, what you're grateful for, what you don't understand yet."
+          ></textarea>
+
+
+          <div class="writing-footer">
+
+            <span>
+              <span id="count">0</span>
+              / 5000 · private here
+            </span>
+
+
+            <button
+              class="save-btn"
+              id="keep"
+              type="button"
+              disabled
+            >
+              save this thought
+              <span>→</span>
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="home-footer">
+
+        <span>
+          you don't have to make it make sense.
+        </span>
+
+        <span>
+          just leave it here.
+        </span>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         LITTLE DAYS
+         ========================= -->
+
+    <section
+      class="days-view hidden"
+      id="daysView"
+    >
+
+      <div class="days-panel">
+
+        <button
+          class="close-days"
+          id="backHome"
+          type="button"
+          aria-label="Back to today"
+        >
+          ×
+        </button>
+
+
+        <div class="days-head">
+
+          <div>
+
+            <span class="tiny-label">
+              YOUR LITTLE DAYS
+            </span>
+
+
+            <h2>
+              Things you<br>
+              <em>left here.</em>
+            </h2>
+
+
+            <p>
+              A tiny calendar of the days you
+              decided to write something down.
+            </p>
+
+          </div>
+
+
+          <div class="calendar-note">
+
+            no streaks.<br>
+            no scores.<br>
+            just days. ♡
+
+          </div>
+
+        </div>
+
+
+        <div class="calendar-nav">
+
+          <button
+            id="prevMonth"
+            type="button"
+            aria-label="Previous month"
+          >
+            ←
+          </button>
+
+
+          <strong id="monthTitle">
+            —
+          </strong>
+
+
+          <button
+            id="nextMonth"
+            type="button"
+            aria-label="Next month"
+          >
+            →
+          </button>
+
+        </div>
+
+
+        <div
+          class="calendar"
+          id="calendar"
+        ></div>
+
+
+        <p class="calendar-hint">
+          tap a little day to open what you left there.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       MOOD POPUP
+       ========================= -->
+
+  <div
+    class="modal hidden"
+    id="moodModal"
+    aria-hidden="true"
+  >
+
+    <div class="modal-card mood-picker">
+
+      <button
+        class="close"
+        data-close="moodModal"
+        type="button"
+        aria-label="Close"
+      >
+        ×
+      </button>
+
+
+      <span class="tiny-label">
+        A LITTLE CHECK-IN
+      </span>
+
+
+      <h2>
+        How are you<br>
+        <em>feeling today?</em>
+      </h2>
+
+
+      <p>
+        There isn't a wrong one.
+        Pick whatever feels closest.
+      </p>
+
+
+      <div
+        class="mood-grid"
+        id="moods"
+      ></div>
+
+
+      <div class="mood-picker-foot">
+        you can change it anytime.
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       SAVE / SEND POPUP
+       ========================= -->
+
+  <div
+    class="modal hidden"
+    id="sendModal"
+    aria-hidden="true"
+  >
+
+    <div class="modal-card send-card">
+
+      <button
+        class="close"
+        data-close="sendModal"
+        type="button"
+        aria-label="Close"
+      >
+        ×
+      </button>
+
+
+      <div
+        class="big-modal-emoji"
+        id="sendMoodEmoji"
+      >
+        ♡
+      </div>
+
+
+      <span class="tiny-label">
+        YOUR NOTE IS SAFE
+      </span>
+
+
+      <h2>
+        It's tucked away.
+      </h2>
+
+
+      <p>
+        Your thought is saved.
+        Keep it here, or send this little piece
+        of today to someone you care about.
+      </p>
+
+
+      <div class="modal-actions">
+
+        <button
+          class="secondary-btn"
+          id="private"
+          type="button"
+        >
+          keep it here
+        </button>
+
+
+        <button
+          class="primary-btn"
+          id="sendOpen"
+          type="button"
+        >
+          send it anonymously →
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       EMAIL POPUP
+       ========================= -->
+
+  <div
+    class="modal hidden"
+    id="emailModal"
+    aria-hidden="true"
+  >
+
+    <div class="modal-card send-card">
+
+      <button
+        class="close"
+        data-close="emailModal"
+        type="button"
+        aria-label="Close"
+      >
+        ×
+      </button>
+
+
+      <div
+        class="big-modal-emoji"
+        id="emailMoodEmoji"
+      >
+        ♡
+      </div>
+
+
+      <span class="tiny-label">
+        A LITTLE DELIVERY
+      </span>
+
+
+      <h2>
+        Who should receive it?
+      </h2>
+
+
+      <p>
+        Their email is all we need.
+        Your name and personal email are never
+        added to the outgoing message.
+      </p>
+
+
+      <label
+        class="field-label"
+        for="recipient"
+      >
+        their email
+      </label>
+
+
+      <input
+        class="email-input"
+        id="recipient"
+        type="email"
+        autocomplete="email"
+        placeholder="someone@example.com"
+      />
+
+
+      <div
+        class="mood-preview"
+        id="emailMoodPreview"
+      >
+        your chosen mood travels with the note
+      </div>
+
+
+      <button
+        class="primary-btn full"
+        id="send"
+        type="button"
+      >
+        send the little something ♡
+      </button>
+
+
+      <p
+        class="status"
+        id="sendStatus"
+      ></p>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       ENTRY POPUP
+       ========================= -->
+
+  <div
+    class="modal hidden"
+    id="entryModal"
+    aria-hidden="true"
+  >
+
+    <div class="modal-card entry-popup">
+
+      <button
+        class="close"
+        data-close="entryModal"
+        type="button"
+        aria-label="Close"
+      >
+        ×
+      </button>
+
+
+      <div class="entry-popup-top">
+
+        <div>
+
+          <span class="tiny-label">
+            YOU LEFT THIS HERE
+          </span>
+
+
+          <h2 id="entryPopupDate">
+            —
+          </h2>
+
+
+          <span
+            class="entry-popup-mood-name"
+            id="entryPopupMoodName"
+          >
+            a little something
+          </span>
+
+        </div>
+
+
+        <span
+          class="entry-popup-mood"
+          id="entryPopupMood"
+        >
+          ♡
+        </span>
+
+      </div>
+
+
+      <div
+        class="entry-popup-letter"
+        id="entryPopupContent"
+      ></div>
+
+
+      <button
+        class="secondary-btn full"
+        data-close="entryModal"
+        type="button"
+      >
+        close this little day
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       SAVED POPUP
+       ========================= -->
+
+  <div
+    class="modal hidden"
+    id="savedModal"
+    aria-hidden="true"
+  >
+
+    <div class="modal-card saved-card">
+
+      <div
+        class="big-modal-emoji"
+        id="savedHeart"
+      >
+        ♡
+      </div>
+
+
+      <span class="tiny-label">
+        SAVED
+      </span>
+
+
+      <h2>
+        It's yours now.
+      </h2>
+
+
+      <p>
+        Your thought is tucked away.
+        Come back whenever you need a place
+        to put things down.
+      </p>
+
+
+      <button
+        class="primary-btn full"
+        data-close="savedModal"
+        type="button"
+      >
+        okay, stay a while
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       LOGIN / SIGNUP
+       ========================= -->
+
+  <div
+    class="modal hidden"
+    id="authModal"
+    aria-hidden="true"
+  >
+
+    <div class="modal-card auth-card">
+
+      <div class="auth-decoration auth-star">
+        ✦
+      </div>
+
+      <div class="auth-decoration auth-heart">
+        ♡
+      </div>
+
+
+      <button
+        class="close"
+        data-close="authModal"
+        type="button"
+        aria-label="Close"
+      >
+        ×
+      </button>
+
+
+      <div class="auth-icon">
+        ♡
+      </div>
+
+
+      <span class="tiny-label">
+        YOUR LITTLE ARCHIVE
+      </span>
+
+
+      <h2 id="authTitle">
+        Welcome back.
+      </h2>
+
+
+      <p id="authSubtitle">
+        Your little days are waiting for you.
+      </p>
+
+
+      <form id="authForm">
+
+        <label
+          class="field-label"
+          for="authEmail"
+        >
+          email
+        </label>
+
+
+        <input
+          class="email-input"
+          id="authEmail"
+          type="email"
+          required
+          autocomplete="email"
+          placeholder="you@example.com"
+        />
+
+
+        <label
+          class="field-label"
+          for="authPassword"
+        >
+          password
+        </label>
+
+
+        <input
+          class="email-input"
+          id="authPassword"
+          type="password"
+          required
+          minlength="8"
+          autocomplete="current-password"
+          placeholder="at least 8 characters"
+        />
+
+
+        <button
+          class="primary-btn full"
+          id="authSubmit"
+          type="submit"
+        >
+          open my little days →
+        </button>
+
+      </form>
+
+
+      <p
+        class="status"
+        id="authStatus"
+      ></p>
+
+
+      <button
+        class="switch-auth"
+        id="switchAuth"
+        type="button"
+      >
+        new here? make an account
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div
+    class="toast hidden"
+    id="toast"
+  ></div>
+
+
+  <div
+    class="transition-layer"
+    id="transitionLayer"
+    aria-hidden="true"
+  >
+    <span id="transitionEmoji">
+      ♡
+    </span>
+  </div>
+
+
+  <script src="app.js"></script>
+
+</body>
+</html>
