@@ -2,7 +2,6 @@ import express from "express";
 import session from "express-session";
 import bcrypt from "bcryptjs";
 import pg from "pg";
-import nodemailer from "nodemailer";
 import rateLimit from "express-rate-limit";
 import dotenv from "dotenv";
 import path from "path";
@@ -284,65 +283,12 @@ async function initDatabase() {
    EMAIL
    ========================================================= */
 
-const mailFrom =
-  process.env.MAIL_FROM ||
-  process.env.SMTP_USER;
-
-
 const smtpConfigured =
   Boolean(
     process.env.SMTP_USER &&
     process.env.SMTP_PASS &&
     mailFrom
   );
-
-
-const transporter =
-  nodemailer.createTransport({
-
-    service:
-      "gmail",
-
-    auth: {
-
-      user:
-        process.env.SMTP_USER,
-
-      pass:
-        process.env.SMTP_PASS
-
-    }
-
-  });
-
-
-if (smtpConfigured) {
-
-  transporter
-    .verify()
-
-    .then(
-      () =>
-        console.log(
-          "✓ Gmail SMTP connection is ready."
-        )
-    )
-
-    .catch(
-      (error) =>
-        console.error(
-          "✗ Gmail SMTP connection failed:",
-          error.message
-        )
-    );
-
-} else {
-
-  console.log(
-    "! SMTP is not configured yet."
-  );
-
-}
 
 
 /* =========================================================
@@ -1984,50 +1930,6 @@ function escapeHtml(value) {
         "'":
           "&#039;"
       }[char])
-  );
-
-}
-
-
-function friendlyEmailError(
-  error
-) {
-
-  if (
-    error?.code ===
-      "EAUTH" ||
-
-    error?.responseCode ===
-      535
-  ) {
-
-    return (
-      "Gmail rejected the SMTP login. " +
-      "Use a Google App Password, not your normal Gmail password."
-    );
-
-  }
-
-
-  if (
-    error?.code ===
-      "ECONNECTION" ||
-
-    error?.code ===
-      "ETIMEDOUT"
-  ) {
-
-    return (
-      "Couldn't reach Gmail right now. " +
-      "Check your internet connection and try again."
-    );
-
-  }
-
-
-  return (
-    error?.message ||
-    "The email couldn't be sent."
   );
 
 }
