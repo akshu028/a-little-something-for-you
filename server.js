@@ -15,6 +15,8 @@ const __dirname =
   path.dirname(__filename);
 
 dotenv.config();
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const MAIL_FROM = process.env.MAIL_FROM || "A Little Something <onboarding@resend.dev>";
 
 
 const { Pool } =
@@ -287,7 +289,7 @@ const smtpConfigured =
   Boolean(
     process.env.SMTP_USER &&
     process.env.SMTP_PASS &&
-    mailFrom
+    process.env.MAIL_FROM
   );
 
 
@@ -1820,47 +1822,37 @@ app.post(
        * as the sender.
        */
 
-      const info =
-        await transporter.sendMail({
+      const response = await fetch("https://api.resend.com/emails", {
+  method: "POST",
+  headers: {
+    "Authorization": `Bearer ${RESEND_API_KEY}`,
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    from: MAIL_FROM,
+    to: [recipient],
+    subject: "A little something for you ♡",
+    text: `${mood ? `Mood: ${mood}\n\n` : ""}${content}\n\n— someone who wanted you to know`,
+    html
+  })
+});
 
-          from:
-            mailFrom,
+const result = await response.json();
 
-          to:
-            recipient,
+if (!response.ok) {
+  console.error("RESEND ERROR:", result);
+  return res.status(500).json({
+    success: false,
+    error: result?.message || "The email couldn't be sent."
+  });
+}
 
-          subject:
-            "A little something for you ♡",
+console.log("✓ Anonymous letter sent:", result.id);
 
-          text:
-            `${
-              mood !== "unnamed"
-                ? `Mood: ${mood}\n\n`
-                : ""
-            }${content}
-
-— someone who wanted you to know`,
-
-          html
-
-        });
-
-
-      console.log(
-        "✓ Anonymous letter sent:",
-        info.messageId
-      );
-
-
-      res.json({
-
-        success:
-          true,
-
-        message:
-          "Your little letter is on its way ♡"
-
-      });
+res.json({
+  success: true,
+  message: "Your little letter is on its way ♡"
+});
 
 
     } catch (error) {
