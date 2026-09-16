@@ -1,74 +1,88 @@
-# A Little Something For You
+# ♡ A Little Something For You
 
-A cozy private journal with mood tracking, PostgreSQL login, a monthly "My Little Days" archive, and optional anonymous email delivery.
+> A tiny corner of the internet for the things you don't know how to say.
 
-## 1. Requirements
+**A Little Something For You** is a cozy digital journal where you can choose how you're feeling, write whatever is on your mind, and keep a little record of your days.
 
-- Node.js 18+
-- PostgreSQL installed and running
-- A separate Gmail account for A Little Something with 2-Step Verification enabled
-- A Gmail App Password for SMTP
+Sometimes you don't need advice.
+Sometimes you just need somewhere to put the feeling.
 
-## 2. Create the PostgreSQL database
+And sometimes, you want to send someone a little something without making it about yourself.
 
-Create an empty database named `little_something` in PostgreSQL.
+---
 
-For example in psql:
+## ✦ What is it?
 
-```sql
-CREATE DATABASE little_something;
-```
+A Little Something For You is a mood-based journaling web app designed around one simple idea:
 
-The server creates the tables automatically on startup. `database.sql` is also included if you want to create them manually.
+**Feel it → Write it → Keep it → Maybe send it.**
 
-## 3. Configure environment variables
+Before writing, you choose a mood. The journal then changes its atmosphere to match how you're feeling, with different colors, prompts, emojis, and little animations.
 
-Copy `.env.example` to `.env`.
+Your entries are saved by date, so you can come back and look through your own little collection of days.
 
-Set:
+You can also optionally send your entry as a little letter to someone.
 
-```env
-PORT=3000
-DATABASE_URL=postgresql://postgres:YOUR_POSTGRES_PASSWORD@localhost:5432/little_something
-SESSION_SECRET=use_a_long_random_secret
-SMTP_USER=alittlesomethingletters@gmail.com
-SMTP_PASS=your16characterapppassword
-MAIL_FROM="A Little Something <alittlesomethingletters@gmail.com>"
-```
+---
 
-For Gmail, **SMTP_PASS must be a Google App Password, not your normal Gmail password**.
+## ✿ Features
 
-Google Account → Security → 2-Step Verification → App passwords → create one → paste the 16-character password into `.env` without spaces.
+- ♡ Mood-based journaling
+- ☀️ 12 different moods to choose from
+- ✨ Mood-specific colors, prompts, animations and UI
+- 📖 Daily journal entries
+- 🗓️ "My Little Days" journal history
+- 🔐 User authentication
+- 💾 PostgreSQL database for persistent storage
+- 💌 Optional letter sending through email
+- 🕊️ Anonymous-style letter delivery
+- 📱 Responsive interface
+- 🎀 Cozy, playful and minimal UI
+- 🛡️ Rate limiting for authentication and email endpoints
 
-Never commit `.env`.
+---
 
-## 4. Install and run
+## ☁️ The moods
 
-```bash
-npm install
-npm start
-```
+You can choose from:
 
-Open:
+☀️ Happy  
+🌱 Hopeful  
+✨ Excited  
+😌 Peaceful  
+🫂 Comforted  
+💭 Confused  
+🌧️ Heavy  
+😔 Sad  
+🫧 Numb  
+😤 Angry  
+😵‍💫 Overwhelmed  
+🥹 Emotional
 
-`http://localhost:3000`
+The interface reacts differently depending on the mood you choose.
 
-## 5. Test email before using the UI
+---
 
-When the server starts, you want to see:
+## 🛠️ Tech Stack
 
-```text
-✓ PostgreSQL database is ready.
-✓ Gmail SMTP connection is ready.
-✓ A Little Something is running at http://localhost:3000
-```
+### Frontend
+- HTML
+- CSS
+- Vanilla JavaScript
 
-If SMTP authentication fails, the server will tell you. `EAUTH` / `535` normally means the Gmail App Password is wrong or missing.
+### Backend
+- Node.js
+- Express.js
 
-## Important privacy note
+### Database
+- PostgreSQL
+- `pg`
 
-The recipient should never receive the writer's email address. The app sends letters from a separate, neutral Gmail account dedicated to A Little Something. The writer's email is not used as `From` or `Reply-To`, and the frontend does not send the writer's email to the mail endpoint.
+### Authentication & Security
+- `bcryptjs`
+- `express-session`
+- `express-rate-limit`
 
-**Important:** create a separate neutral Gmail account for `SMTP_USER` (for example, `alittlesomethingletters@gmail.com`). Do not put your personal Gmail address there. The recipient will see the neutral app sender, not the writer.
-
-This protects the writer from the recipient. It is not a promise that the server/operator or email provider cannot associate a send with the account or infrastructure behind it.
+### Email
+- Nodemailer
+- SMTP
